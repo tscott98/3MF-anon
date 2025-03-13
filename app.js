@@ -1,5 +1,3 @@
-const zip = new JSZip();
-
 async function clean3MF(file, removeAuxiliaries) {
     const zip = await window.JSZip.loadAsync(file);
     
