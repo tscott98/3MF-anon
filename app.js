@@ -25,10 +25,19 @@ async function clean3MF(file, removeAuxiliaries) {
 }
 
 // File input handler
-document.getElementById('fileInput').addEventListener('change', async (event) => {
+document.getElementById('fileInput').addEventListener('change', (event) => {
     const file = event.target.files[0];
     if (!file) return;
     
+    // Store the selected file in a global variable
+    window.selectedFile = file;
+});
+
+// Button click handler
+document.getElementById('processFile').addEventListener('click', async () => {
+    const file = window.selectedFile;
+    if (!file) return;
+
     const removeAuxiliaries = document.getElementById('removeAuxiliaries').checked;
     const cleanedFile = await clean3MF(file, removeAuxiliaries);
     
