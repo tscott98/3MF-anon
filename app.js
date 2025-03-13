@@ -19,8 +19,8 @@ async function clean3MF(file, removeAuxiliaries) {
         });
     }
     
-    // Repack the .3MF file
-    const cleanedFile = await zip.generateAsync({ type: "blob" });
+    // Repack the .3MF file with compression
+    const cleanedFile = await zip.generateAsync({ type: "blob", compression: "DEFLATE" });
     return cleanedFile;
 }
 
