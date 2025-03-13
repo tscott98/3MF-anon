@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3MF Metadata Cleaner</title>
+    <script defer type="module" src="app.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+        }
+        h1 {
+            color: #333;
+        }
+        input[type="file"] {
+            margin: 15px 0;
+        }
+        label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        input[type="checkbox"] {
+            transform: scale(1.2);
+        }
+        .button {
+            background-color: #0073e6;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+        .button:hover {
+            background-color: #005bb5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>3MF Metadata Cleaner</h1>
+        <p>Select a .3MF file to remove metadata.</p>
+        <input type="file" id="fileInput" accept=".3mf">
+        <label>
+            <input type="checkbox" id="removeAuxiliaries"> Remove Auxiliaries Folder
+        </label>
+        <button class="button" id="processFile">Process File</button>
+        <p>The cleaned file will be automatically downloaded.</p>
+    </div>
+</body>
+</html>
