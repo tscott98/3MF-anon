@@ -5,7 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3MF Metadata Cleaner</title>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script defer src="app.js?v=1.0.0"></script> <!-- Add version query parameter -->
+    <script defer src="app.js"></script> <!-- Remove version query parameter -->
+    <script defer>
+        document.addEventListener("DOMContentLoaded", () => {
+            const versionElement = document.querySelector(".version");
+            if (versionElement) {
+                versionElement.textContent = `Version: ${appVersion}`;
+            }
+        });
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -91,7 +99,7 @@
         </label>
         <button class="button" id="processFile">Process File</button>
         <p>The cleaned file will be automatically downloaded.</p>
-        <p class="version">Version: 1.0.0</p> <!-- Add version display -->
+        <p class="version"></p> <!-- Remove hardcoded version -->
     </div>
 </body>
 </html>

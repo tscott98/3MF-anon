@@ -1,24 +1,26 @@
-const VERSION = "1.0.0"; // Define version constant
+const appVersion = "1.0.1";
 
 async function clean3MF(file, removeAuxiliaries) {
     const zip = await window.JSZip.loadAsync(file);
     
     // Remove all metadata except for 'Application' and 'BambuStudio:3mfVersion' from 3D/3dmodel.model and 3D/Objects/*.model files
-    Object.keys(zip.files).forEach(async (fileName) => {
-        if ((fileName.match(/^3D\/.*\.model$/i) || fileName.match(/^3D\/Objects\/.*\.model$/i))) {
+    const metadataRegex = /<metadata name="(?!Application|BambuStudio:3mfVersion)[^"]+">.*?<\/metadata>/g;
+
+    for (const fileName of Object.keys(zip.files)) {
+        if (fileName.match(/^3D\/.*\.model$/i) || fileName.match(/^3D\/Objects\/.*\.model$/i)) {
             let modelXML = await zip.files[fileName].async("text");
-            modelXML = modelXML.replace(/<metadata name="(?!Application|BambuStudio:3mfVersion")[^>]+">.*?<\/metadata>/g, '');
-            zip.file(fileName, modelXML);
+            modelXML = modelXML.replace(metadataRegex, ''); // Remove unwanted metadata
+            zip.file(fileName, modelXML); // Update the file in the ZIP
         }
-    });
+    }
     
     // Remove 'Auxiliaries' folder if the option is selected
     if (removeAuxiliaries) {
-        Object.keys(zip.files).forEach(fileName => {
+        for (const fileName of Object.keys(zip.files)) {
             if (fileName.startsWith('Auxiliaries/')) {
                 zip.remove(fileName);
             }
-        });
+        }
     }
     
     // Repack the .3MF file with compression
