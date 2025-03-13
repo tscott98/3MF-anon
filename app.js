@@ -1,9 +1,9 @@
 async function clean3MF(file, removeAuxiliaries) {
     const zip = await window.JSZip.loadAsync(file);
     
-    // Remove all metadata except for 'Application' and 'BambuStudio:3mfVersion' from 3D/3dmodel.model files
+    // Remove all metadata except for 'Application' and 'BambuStudio:3mfVersion' from 3D/3dmodel.model and 3D/Objects/*.model files
     Object.keys(zip.files).forEach(async (fileName) => {
-        if (fileName.startsWith('3D/') && fileName.endsWith('3dmodel.model')) {
+        if ((fileName.match(/^3D\/.*\.model$/i) || fileName.match(/^3D\/Objects\/.*\.model$/i))) {
             let modelXML = await zip.files[fileName].async("text");
             modelXML = modelXML.replace(/<metadata name="(?!Application|BambuStudio:3mfVersion")[^>]+">.*?<\/metadata>/g, '');
             zip.file(fileName, modelXML);
