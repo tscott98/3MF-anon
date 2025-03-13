@@ -1,7 +1,7 @@
 const zip = new JSZip();
 
 async function clean3MF(file, removeAuxiliaries) {
-    const zip = await JSZip.loadAsync(file);
+    const zip = await window.JSZip.loadAsync(file);
     
     // Remove all metadata except for 'Application' and 'BambuStudio:3mfVersion' from 3D/3dmodel.model files
     Object.keys(zip.files).forEach(async (fileName) => {
