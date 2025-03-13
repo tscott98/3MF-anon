@@ -1,3 +1,5 @@
+const VERSION = "1.0.0"; // Define version constant
+
 async function clean3MF(file, removeAuxiliaries) {
     const zip = await window.JSZip.loadAsync(file);
     
@@ -31,12 +33,42 @@ document.getElementById('fileInput').addEventListener('change', (event) => {
     
     // Store the selected file in a global variable
     window.selectedFile = file;
+
+    // Update UI to show the selected file name
+    document.getElementById('fileNameDisplay').textContent = `Selected file: ${file.name}`;
+});
+
+// Add drag-and-drop functionality
+const dropZone = document.getElementById('dropZone');
+dropZone.addEventListener('dragover', (event) => {
+    event.preventDefault();
+    dropZone.classList.add('drag-over');
+});
+
+dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('drag-over');
+});
+
+dropZone.addEventListener('drop', (event) => {
+    event.preventDefault();
+    dropZone.classList.remove('drag-over');
+    const file = event.dataTransfer.files[0];
+    if (!file) return;
+
+    // Store the selected file in a global variable
+    window.selectedFile = file;
+
+    // Update UI to show the selected file name
+    document.getElementById('fileNameDisplay').textContent = `Selected file: ${file.name}`;
 });
 
 // Button click handler
 document.getElementById('processFile').addEventListener('click', async () => {
     const file = window.selectedFile;
-    if (!file) return;
+    if (!file) {
+        alert('Please select a file first.');
+        return;
+    }
 
     const removeAuxiliaries = document.getElementById('removeAuxiliaries').checked;
     const cleanedFile = await clean3MF(file, removeAuxiliaries);
