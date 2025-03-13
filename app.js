@@ -1,4 +1,4 @@
-import JSZip from 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+const zip = new JSZip();
 
 async function clean3MF(file, removeAuxiliaries) {
     const zip = await JSZip.loadAsync(file);
